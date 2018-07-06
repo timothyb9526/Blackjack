@@ -56,28 +56,60 @@ def blackjack():
         8, 8, 8, 8, 9, 9, 9, 9, 10, 10, 10, 10, 'Q', 'Q', 'Q', 'Q', 'K', 'K',
         'K', 'K', 'J', 'J', 'J', 'J', 'A', 'A', 'A', 'A'
     ]
-
+    for _deck in range(6):
+        for _suit in range(4):
+            for i in range(2, 11):
+                deck.append(i)
+            for _facecard in range(3):
+                deck.append(10)
+                deck.append('Ace')
     shuffle(deck)
-    blackjack_hand = []
+    player_1_hand = []
+    player_2_hand = []
+    player_3_hand = []
+    player_4_hand = []
     dealer_hand = []
+    betting_amount = []
+    players = [player_1_hand, player_2_hand, player_3_hand, player_4_hand]
     for _ in range(2):
-        blackjack_hand.append(deck.pop())
+        player_1_hand.append(deck.pop())
+        player_2_hand.append(deck.pop())
+        player_3_hand.append(deck.pop())
+        player_4_hand.append(deck.pop)
         dealer_hand.append(deck.pop())
-    while hand_score(blackjack_hand) < 22:
+    betting = input('Would you like to place a bet? ')
+    for name in players:
 
-        print('player: {}, dealer: {}'.format(
-            hand_score(blackjack_hand), dealer_hand[0]))
-        if hand_score(blackjack_hand) == 21:
+        if betting == 'yes':
+            print()
+        elif betting == 'no':
+            return ()
+        else:
+            print('ERROR')
+        bet_amount = input('How much would you like to bet? ')
+        betting_amount.append(int(bet_amount))
+        print(betting_amount)
+
+    while hand_score(player_1_hand) < 22:
+
+        print('player: {}, player2: {}, player3: {}, player4: {}, dealer: {}'.
+              format(
+                  hand_score(player_1_hand), hand_score(player_2_hand),
+                  hand_score(player_3_hand), hand_score(player_4_hand),
+                  dealer_hand[0]))
+        if hand_score(player_1_hand) == 21:
             break
         option = input('Would you like to hit or stay? enter "h" to hit. ')
         if option == 'h':
-            blackjack_hand.append(deck.pop())
+            player_1_hand.append(deck.pop())
             continue
         else:
             break
-    print(blackjack_hand, dealer_hand[0])
+    print(player_1_hand, dealer_hand[0])
 
-    while hand_score(blackjack_hand) < 22 and hand_score(dealer_hand) < 22:
+    while hand_score(player_1_hand) < 22 and hand_score(
+            player_2_hand) and hand_score(player_3_hand) and hand_score(
+                player_4_hand) and hand_score(dealer_hand) < 22:
         if hand_score(dealer_hand) <= 17:
             dealer_hand.append(deck.pop())
             print('dealer hits!')
@@ -87,21 +119,25 @@ def blackjack():
             break
 
     print('player: {}, dealer: {}'.format(
-        hand_score(blackjack_hand), hand_score(dealer_hand)))
-    print(blackjack_hand, dealer_hand)
+        hand_score(player_1_hand), hand_score(dealer_hand)))
+    print(player_1_hand, dealer_hand)
 
-    if hand_score(blackjack_hand) > 21 and hand_score(dealer_hand) < 21:
+    if hand_score(player_1_hand) > 21 and hand_score(dealer_hand) < 21:
         print('DEALER WINS')
-    elif hand_score(dealer_hand) > 21 and hand_score(blackjack_hand) < 21:
-        print('YOU WIN')
-    elif hand_score(dealer_hand) > 21 and hand_score(blackjack_hand) > 21:
+        print('Dealer Wins: ${}'.format(sum(betting_amount)))
+    elif hand_score(dealer_hand) > 21 and hand_score(player_1_hand) < 21:
+        print('PLAYER1 WINS')
+        print('Player1 Wins: ${}'.format(sum(betting_amount)))
+    elif hand_score(dealer_hand) > 21 and hand_score(player_1_hand) > 21:
         print('BUST')
-    elif hand_score(dealer_hand) == hand_score(blackjack_hand):
+    elif hand_score(dealer_hand) == hand_score(player_1_hand):
         print('PUSH')
-    elif (hand_score(blackjack_hand) > hand_score(dealer_hand)):
-        print('YOU WIN')
-    elif hand_score(blackjack_hand) < hand_score(dealer_hand):
+    elif (hand_score(player_1_hand) > hand_score(dealer_hand)):
+        print('PLAYER1 WINS')
+        print('Player1 Wins: ${}'.format(sum(betting_amount)))
+    elif hand_score(player_1_hand) < hand_score(dealer_hand):
         print('DEALER WINS')
+        print('Dealer Wins: ${}'.format(sum(betting_amount)))
 
 
 def main():
