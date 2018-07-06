@@ -10,7 +10,7 @@ def card_score(card):
         card = 10
     elif card == 'Q':
         card = 10
-    elif card == 'A':
+    elif card == 'Ace':
         card = 11
     return card
 
@@ -34,7 +34,6 @@ def hand_scores(hand):
     [7, 17, 27]
     '''
     interpretations = []
-    hand_card_scores = []
 
     if not hand:
         return [[]]
@@ -75,7 +74,7 @@ def blackjack():
         player_1_hand.append(deck.pop())
         player_2_hand.append(deck.pop())
         player_3_hand.append(deck.pop())
-        player_4_hand.append(deck.pop)
+        player_4_hand.append(deck.pop())
         dealer_hand.append(deck.pop())
     betting = input('Would you like to place a bet? ')
     for name in players:
@@ -105,7 +104,9 @@ def blackjack():
             continue
         else:
             break
-    print(player_1_hand, dealer_hand[0])
+    print('player1: {}, player2: {}, player3: {}, player4: {}, dealer: {}'.
+          format(player_1_hand, player_2_hand, player_3_hand, player_4_hand,
+                 dealer_hand[0]))
 
     while hand_score(player_1_hand) < 22 and hand_score(
             player_2_hand) and hand_score(player_3_hand) and hand_score(
@@ -118,9 +119,14 @@ def blackjack():
             print('dealer stays')
             break
 
-    print('player: {}, dealer: {}'.format(
-        hand_score(player_1_hand), hand_score(dealer_hand)))
-    print(player_1_hand, dealer_hand)
+    print(
+        'player: {}, player2: {}, player3: {}, player4: {}, dealer: {}'.format(
+            hand_score(player_1_hand), hand_score(player_2_hand),
+            hand_score(player_3_hand), hand_score(player_4_hand),
+            hand_score(dealer_hand)))
+    print('player1: {}, player2: {}, player3: {}, player4: {}, dealer: {}'.
+          format(player_1_hand, player_2_hand, player_3_hand, player_4_hand,
+                 dealer_hand[0]))
 
     if hand_score(player_1_hand) > 21 and hand_score(dealer_hand) < 21:
         print('DEALER WINS')
@@ -138,6 +144,15 @@ def blackjack():
     elif hand_score(player_1_hand) < hand_score(dealer_hand):
         print('DEALER WINS')
         print('Dealer Wins: ${}'.format(sum(betting_amount)))
+    elif hand_score(dealer_hand) > 21 and hand_score(player_2_hand) < 21:
+        print('PLAYER2 WINS')
+        print('Player2 Wins: ${}'.format(sum(betting_amount)))
+    elif hand_score(dealer_hand) > 21 and hand_score(player_3_hand) < 21:
+        print('PLAYER3 WINS')
+        print('Player3 Wins: ${}'.format(sum(betting_amount)))
+    elif hand_score(dealer_hand) > 21 and hand_score(player_4_hand) < 21:
+        print('PLAYER4 WINS')
+        print('Player4 Wins: ${}'.format(sum(betting_amount)))
 
 
 def main():
