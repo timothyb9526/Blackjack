@@ -35,19 +35,19 @@ def hand_score(hand):
             return total + 1
     elif aces == 2:
         if total <= 10:
-            return total + 11
+            return total + 12
         else:
-            return total + 1
+            return total + 2
     elif aces == 3:
         if total <= 10:
-            return total + 11
+            return total + 13
         else:
-            return total + 1
+            return total + 3
     elif aces == 4:
         if total <= 10:
-            return total + 11
+            return total + 14
         else:
-            return total + 1
+            return total + 4
 
 
 # def hand_scores(hand):
@@ -88,7 +88,7 @@ def get_num_players():
 
 def winner(player, dealer):
     if hand_score(player['cards']) > 21:
-        print('DEALER WINS beats', player['name'])
+        print('DEALER beats', player['name'])
     elif hand_score(dealer) > 21 and hand_score(player['cards']) != 21:
         print(player['name'].upper(), 'WINS')
     elif hand_score(dealer) == hand_score(player['cards']):
@@ -96,7 +96,7 @@ def winner(player, dealer):
     elif hand_score(player['cards']) == 21:
         print(player['name'], 'gets BLACKJACK')
     elif hand_score(dealer) > hand_score(player['cards']):
-        print('DEALER WINS beats', player['name'])
+        print('DEALER beats', player['name'])
 
     else:
         print(player['name'].upper(), 'WINS')
@@ -153,9 +153,6 @@ def blackjack():
             else:
                 break
 
-    for player in players:
-        print('{}: {} ({})'.format(player['name'], player['cards'],
-                                   hand_score(player['cards'])))
     print('Dealer: {}'.format(dealer_hand))
 
     while True:
