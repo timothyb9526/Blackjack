@@ -48,6 +48,16 @@ def hand_scores(hand):
         return as_self
 
 
+def get_num_players():
+    while True:
+        num_players = input('How many players? ').strip()
+        if num_players.isdigit():
+            int_num_players = int(num_players)
+            if int_num_players > 0 and int_num_players <= 4:
+                return int_num_players
+        print('invalid num of players')
+
+
 def blackjack():
 
     deck = [
@@ -63,35 +73,52 @@ def blackjack():
                 deck.append(10)
                 deck.append('Ace')
     shuffle(deck)
-    player_1_hand = []
-    player_2_hand = []
-    player_3_hand = []
-    player_4_hand = []
-    dealer_hand = []
-    betting_amount = []
-    players = [player_1_hand, player_2_hand, player_3_hand, player_4_hand]
-    for _ in range(2):
-        player_1_hand.append(deck.pop())
-        player_2_hand.append(deck.pop())
-        player_3_hand.append(deck.pop())
-        player_4_hand.append(deck.pop())
-        dealer_hand.append(deck.pop())
-    betting = input('Would you like to place a bet? ')
-    for name in players:
 
-        if betting == 'yes':
-            print()
-        elif betting == 'no':
-            return ()
-        else:
-            print('ERROR')
-        bet_amount = input('How much would you like to bet? ')
-        betting_amount.append(int(bet_amount))
-        print(betting_amount)
+    num_players = get_num_players()
+
+    players = []
+    for i in range(num_players):
+        player_name = 'Player {}'.format(i + 1)
+        players.append({'name': player_name, 'cards': [], 'money': 100})
+    for player in players:
+        player['cards'].append(deck.pop())
+        player['cards'].append(deck.pop())
+
+    print(players)
+    input()
+
+    # player_1_hand = []
+    # player_2_hand = []
+    # player_3_hand = []
+    # player_4_hand = []
+    # dealer_hand = []
+    # betting_amount = []
+    # players = [player_1_hand, player_2_hand, player_3_hand, player_4_hand]
+    # for _ in range(2):
+    #     player_1_hand.append(deck.pop())
+    #     player_2_hand.append(deck.pop())
+    #     player_3_hand.append(deck.pop())
+    #     player_4_hand.append(deck.pop())
+    #     dealer_hand.append(deck.pop())
+
+    # players_in_game = input('How many players will be playing today? ')
+    # if int(players_in_game) > 4:
+    #     print('We can only have four players at a time. ')
+    #     return
+    # else:
+    #     print()
+
+    # for name in players: # first way
+    #     bet_amount = input('How much would you like to bet? ')
+    #     betting_amount.append(int(bet_amount))
+    #     print(betting_amount)
+
+    # for player in players: # second way
+    #     bet_amount = input('How much would you like to bet? ')
+    #     player['money'] = input(bet_amount)
 
     while hand_score(player_1_hand) < 22:
-
-        print('player: {}, player2: {}, player3: {}, player4: {}, dealer: {}'.
+        print('player1: {}, player2: {}, player3: {}, player4: {}, dealer: {}'.
               format(
                   hand_score(player_1_hand), hand_score(player_2_hand),
                   hand_score(player_3_hand), hand_score(player_4_hand),
@@ -99,31 +126,87 @@ def blackjack():
         if hand_score(player_1_hand) == 21:
             break
         option = input('Would you like to hit or stay? enter "h" to hit. ')
+        print()
         if option == 'h':
             player_1_hand.append(deck.pop())
             continue
         else:
             break
+    while hand_score(player_2_hand) < 22:
+
+        print('player1: {}, player2: {}, player3: {}, player4: {}, dealer: {}'.
+              format(
+                  hand_score(player_1_hand), hand_score(player_2_hand),
+                  hand_score(player_3_hand), hand_score(player_4_hand),
+                  dealer_hand[0]))
+
+        if hand_score(player_2_hand) == 21:
+            break
+        option = input('Would you like to hit or stay? enter "h" to hit. ')
+        print()
+        if option == 'h':
+            player_2_hand.append(deck.pop())
+            continue
+        else:
+            break
+    while hand_score(player_3_hand) < 22:
+
+        print('player1: {}, player2: {}, player3: {}, player4: {}, dealer: {}'.
+              format(
+                  hand_score(player_1_hand), hand_score(player_2_hand),
+                  hand_score(player_3_hand), hand_score(player_4_hand),
+                  dealer_hand[0]))
+
+        if hand_score(player_3_hand) == 21:
+            break
+        option = input('Would you like to hit or stay? enter "h" to hit. ')
+        print()
+        if option == 'h':
+            player_3_hand.append(deck.pop())
+            continue
+        else:
+            break
+    while hand_score(player_4_hand) < 22:
+
+        print('player1: {}, player2: {}, player3: {}, player4: {}, dealer: {}'.
+              format(
+                  hand_score(player_1_hand), hand_score(player_2_hand),
+                  hand_score(player_3_hand), hand_score(player_4_hand),
+                  dealer_hand[0]))
+
+        if hand_score(player_4_hand) == 21:
+            break
+        option = input('Would you like to hit or stay? enter "h" to hit. ')
+        print()
+        if option == 'h':
+            player_4_hand.append(deck.pop())
+            continue
+        else:
+            break
+
     print('player1: {}, player2: {}, player3: {}, player4: {}, dealer: {}'.
           format(player_1_hand, player_2_hand, player_3_hand, player_4_hand,
                  dealer_hand[0]))
 
-    while hand_score(player_1_hand) < 22 and hand_score(
-            player_2_hand) and hand_score(player_3_hand) and hand_score(
-                player_4_hand) and hand_score(dealer_hand) < 22:
+    while hand_score(player_1_hand) < 22 or hand_score(
+            player_2_hand) or hand_score(player_3_hand) or hand_score(
+                player_4_hand) or hand_score(dealer_hand) < 22:
         if hand_score(dealer_hand) <= 17:
             dealer_hand.append(deck.pop())
             print('dealer hits!')
+            print()
             input('press any key to continue')
+            print()
         elif hand_score(dealer_hand) >= 17:
             print('dealer stays')
+            print()
             break
 
-    print(
-        'player: {}, player2: {}, player3: {}, player4: {}, dealer: {}'.format(
-            hand_score(player_1_hand), hand_score(player_2_hand),
-            hand_score(player_3_hand), hand_score(player_4_hand),
-            hand_score(dealer_hand)))
+    print('player1: {}, player2: {}, player3: {}, player4: {}, dealer: {}'.
+          format(
+              hand_score(player_1_hand), hand_score(player_2_hand),
+              hand_score(player_3_hand), hand_score(player_4_hand),
+              hand_score(dealer_hand)))
     print('player1: {}, player2: {}, player3: {}, player4: {}, dealer: {}'.
           format(player_1_hand, player_2_hand, player_3_hand, player_4_hand,
                  dealer_hand[0]))
@@ -131,7 +214,7 @@ def blackjack():
     if hand_score(player_1_hand) > 21 and hand_score(dealer_hand) < 21:
         print('DEALER WINS')
         print('Dealer Wins: ${}'.format(sum(betting_amount)))
-    elif hand_score(dealer_hand) > 21 and hand_score(player_1_hand) < 21:
+    elif hand_score(dealer_hand) > 21 and hand_score(player_1_hand) <= 21:
         print('PLAYER1 WINS')
         print('Player1 Wins: ${}'.format(sum(betting_amount)))
     elif hand_score(dealer_hand) > 21 and hand_score(player_1_hand) > 21:
