@@ -97,6 +97,7 @@ def winner(player, dealer):
         print(player['name'], 'gets BLACKJACK')
     elif hand_score(dealer) > hand_score(player['cards']):
         print('DEALER WINS beats', player['name'])
+
     else:
         print(player['name'].upper(), 'WINS')
 
@@ -130,9 +131,9 @@ def blackjack():
 
     # print(players)
 
-    for player in players:  # second way
-        bet_amount = input('How much would you like to bet? ')
-        player['money'] = input(bet_amount)
+    #for player in players:  # second way
+    #bet_amount = input('How much would you like to bet? ')
+    #player['money'] = input(bet_amount)
 
     for player in players:
         while hand_score(player['cards']) < 22:
@@ -146,6 +147,8 @@ def blackjack():
             print()
             if option == 'h':
                 player['cards'].append(deck.pop())
+                if hand_score(player['cards']) > 21:
+                    print(player['name'], '*** GOT BUSTED ***')
                 continue
             else:
                 break
